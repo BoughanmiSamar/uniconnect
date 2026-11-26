@@ -1,8 +1,9 @@
-const CACHE_NAME = 'uniconnect-v1';
+const CACHE_NAME = 'uniconnect-v2';
 const PRECACHE_URLS = [
   '/',
   '/offline',
   '/manifest.webmanifest',
+  '/emblem.png',
   '/logo.png',
   '/icon-192.png',
   '/icon-512.png',

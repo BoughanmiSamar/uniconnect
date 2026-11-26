@@ -1,5 +1,7 @@
 'use server';
 
+import path from 'path';
+import fs from 'fs';
 import { revalidatePath } from 'next/cache';
 import connectToDatabase from '@/lib/mongodb';
 import { Absence, StatutPresence } from '@/models/Absence';
@@ -125,7 +127,34 @@ export async function submitJustificatifAction(formData: FormData) {
 
   const absenceId = formData.get('absenceId') as string;
   const motif = (formData.get('motif') as string)?.trim();
-  const pieceJointe = (formData.get('pieceJointe') as string)?.trim() || 'justificatif_attestation.pdf';
+  const file = formData.get('fichier') as File | null;
+  const pieceJointeFallback = (formData.get('pieceJointe') as string)?.trim();
+
+  let pieceJointe = pieceJointeFallback || '';
+
+  // Handle uploaded file if provided
+  if (file && typeof file === 'object' && file.size > 0 && typeof file.arrayBuffer === 'function') {
+    try {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'justificatifs');
+      await fs.promises.mkdir(uploadDir, { recursive: true });
+
+      const rawExt = path.extname(file.name) || '.pdf';
+      const cleanBase = path.basename(file.name, rawExt).replace(/[^a-zA-Z0-9_-]/g, '_');
+      const filename = `${Date.now()}_${cleanBase}${rawExt}`;
+      const filePath = path.join(uploadDir, filename);
+
+      await fs.promises.writeFile(filePath, buffer);
+      pieceJointe = `/uploads/justificatifs/${filename}`;
+    } catch (err: any) {
+      console.error('[Upload Justificatif Error]:', err);
+    }
+  }
+
+  if (!pieceJointe) {
+    pieceJointe = 'justificatif_medical.pdf';
+  }
 
   if (!absenceId || !motif) {
     return { success: false, error: 'Le motif d’absence est requis.' };

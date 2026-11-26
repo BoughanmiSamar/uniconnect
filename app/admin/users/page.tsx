@@ -3,6 +3,7 @@ import { User, UserRole } from '@/models/User';
 import { Group } from '@/models/Group';
 import { createUserAction, deleteUserAction } from '@/app/(modules)/users/actions';
 import SubmitButton from '@/components/ui/SubmitButton';
+import EditUserModal from '@/components/modules/EditUserModal';
 import Link from 'next/link';
 import { Users, UserPlus, Trash2, Mail, Shield, Layers } from 'lucide-react';
 
@@ -33,6 +34,10 @@ export default async function AdminUsersPage({
   };
 
   const users: any[] = filteredUsers;
+  const serializedGroups = groups.map((g) => ({
+    _id: g._id.toString(),
+    nom: g.nom,
+  }));
 
   async function handleCreateUser(formData: FormData) {
     'use server';
@@ -205,7 +210,18 @@ export default async function AdminUsersPage({
                     <p className="flex items-center gap-1.5"><Layers className="w-3.5 h-3.5 text-indigo-400" /> {(u.groupe as any).nom}</p>
                   )}
                 </div>
-                <div className="pt-2 border-t border-slate-100 flex justify-end">
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-end gap-1">
+                  <EditUserModal
+                    user={{
+                      _id: u._id.toString(),
+                      nom: u.nom,
+                      email: u.email,
+                      role: u.role,
+                      groupe: u.groupe,
+                      telephone: u.telephone,
+                    }}
+                    groups={serializedGroups}
+                  />
                   <form action={handleDeleteUser}>
                     <input type="hidden" name="id" value={u._id.toString()} />
                     <button
@@ -258,16 +274,29 @@ export default async function AdminUsersPage({
                   </td>
                   <td className="py-3 px-4 text-slate-500">{u.telephone || '-'}</td>
                   <td className="py-3 px-4 text-right">
-                    <form action={handleDeleteUser} className="inline-block">
-                      <input type="hidden" name="id" value={u._id.toString()} />
-                      <button
-                        type="submit"
-                        className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                        title="Supprimer"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </form>
+                    <div className="flex items-center justify-end gap-1">
+                      <EditUserModal
+                        user={{
+                          _id: u._id.toString(),
+                          nom: u.nom,
+                          email: u.email,
+                          role: u.role,
+                          groupe: u.groupe,
+                          telephone: u.telephone,
+                        }}
+                        groups={serializedGroups}
+                      />
+                      <form action={handleDeleteUser} className="inline-block">
+                        <input type="hidden" name="id" value={u._id.toString()} />
+                        <button
+                          type="submit"
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                          title="Supprimer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               ))}

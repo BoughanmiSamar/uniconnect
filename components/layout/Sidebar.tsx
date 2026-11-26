@@ -42,7 +42,7 @@ export default function Sidebar({ role }: SidebarProps) {
           { href: '/teacher/grades', label: 'Saisie des Notes', icon: Award },
           { href: '/teacher/justificatifs', label: 'Justificatifs', icon: FileCheck2 },
           { href: '/teacher/schedule', label: 'Mon Emploi du temps', icon: Calendar },
-          { href: '/teacher/at-risk', label: 'Étudiants à Risque (IA)', icon: AlertTriangle },
+          { href: '/teacher/at-risk', label: 'Étudiants à Risque', icon: AlertTriangle },
           { href: '/teacher/annonces', label: 'Mes Annonces', icon: Megaphone },
         ];
       case 'student':

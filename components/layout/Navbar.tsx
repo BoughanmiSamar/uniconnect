@@ -48,16 +48,16 @@ export default function Navbar({ user }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-6 py-2.5 transition-all">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="w-full flex items-center justify-between">
         {/* Left: Brand */}
         <div className="flex items-center gap-3">
-          <Link href={`/${user.role}`} className="flex items-center gap-2 group">
-            <div className="relative w-8 h-8 flex items-center justify-center">
+          <Link href={`/${user.role}`} className="flex items-center gap-2.5 group">
+            <div className="relative w-9 h-9 flex items-center justify-center p-1 rounded-xl bg-teal-50 border border-teal-100 shadow-xs">
               <Image
-                src="/logo.png"
-                alt="Logo UniConnect"
-                width={36}
-                height={36}
+                src="/emblem.png"
+                alt="Emblème UniConnect"
+                width={32}
+                height={32}
                 className="object-contain transition-transform group-hover:scale-105"
                 priority
               />

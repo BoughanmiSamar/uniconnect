@@ -1,5 +1,19 @@
 import mongoose from 'mongoose';
 
+// Pre-register all models to prevent MissingSchemaError on populates
+import '@/models/User';
+import '@/models/Department';
+import '@/models/Filiere';
+import '@/models/Group';
+import '@/models/Matiere';
+import '@/models/Affectation';
+import '@/models/Salle';
+import '@/models/Seance';
+import '@/models/Note';
+import '@/models/Absence';
+import '@/models/Justificatif';
+import '@/models/Annonce';
+
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;

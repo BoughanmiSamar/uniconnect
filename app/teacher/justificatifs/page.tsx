@@ -4,7 +4,8 @@ import { Justificatif } from '@/models/Justificatif';
 import { Absence } from '@/models/Absence';
 import { reviewJustificatifAction } from '@/app/(modules)/absences/actions';
 import SubmitButton from '@/components/ui/SubmitButton';
-import { FileCheck2, Check, X, Clock, AlertCircle, FileText } from 'lucide-react';
+import FileViewerModal from '@/components/modules/FileViewerModal';
+import { FileCheck2, Check, X, Clock, AlertCircle, FileText, Eye, ExternalLink } from 'lucide-react';
 
 
 
@@ -110,9 +111,16 @@ export default async function TeacherJustificatifsPage() {
                     <span className="font-bold text-slate-700 block">Motif invoqué par l’étudiant :</span>
                     <p className="text-slate-600 leading-relaxed italic">« {j.motif} »</p>
                     {j.pieceJointe && (
-                      <div className="pt-2 flex items-center gap-1.5 text-teal-700 font-mono text-[11px]">
-                        <FileText className="w-3.5 h-3.5" />
-                        <span>Document : {j.pieceJointe}</span>
+                      <div className="pt-2 space-y-1.5">
+                        <FileViewerModal
+                          fileUrl={j.pieceJointe}
+                          fileName={`Justificatif_${etudiant?.nom || 'etudiant'}`}
+                          buttonLabel="Consulter la pièce jointe (PDF / Image)"
+                          buttonClassName="inline-flex items-center gap-2 px-3 py-2 bg-teal-50 hover:bg-teal-100 text-[#03c9d7] font-bold rounded-xl border border-teal-200 text-xs transition-all shadow-2xs hover:shadow-xs group cursor-pointer"
+                        />
+                        <p className="text-[10px] text-slate-400 font-mono truncate">
+                          Fichier : {j.pieceJointe.replace('/uploads/justificatifs/', '')}
+                        </p>
                       </div>
                     )}
                   </div>

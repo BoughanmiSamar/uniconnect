@@ -23,12 +23,12 @@ export default function LoginPage() {
         {/* Brand card */}
         <div className="bg-white border border-slate-100 rounded-3xl p-6 sm:p-8 shadow-xl shadow-teal-500/5 text-center">
           <div className="flex justify-center mb-3">
-            <div className="relative w-28 h-28 flex items-center justify-center p-2 rounded-2xl bg-teal-50/50">
+            <div className="relative w-24 h-24 flex items-center justify-center p-3 rounded-3xl bg-teal-50 border border-teal-100 shadow-xs">
               <Image
-                src="/logo.png"
-                alt="Logo UniConnect"
-                width={120}
-                height={120}
+                src="/emblem.png"
+                alt="Emblème UniConnect"
+                width={72}
+                height={72}
                 className="object-contain"
                 priority
               />
@@ -37,7 +37,7 @@ export default function LoginPage() {
 
           <h1 className="text-2xl font-black tracking-tight text-[#03c9d7]">UNICONNECT</h1>
           <p className="text-xs text-slate-500 font-medium mt-1">
-            Plateforme Progressive de Gestion Universitaire
+            Plateforme de Gestion Universitaire
           </p>
 
           {errorMsg && (
