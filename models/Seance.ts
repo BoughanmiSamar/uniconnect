@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from 'mongoose';
 export type JourSemaine = 'Lundi' | 'Mardi' | 'Mercredi' | 'Jeudi' | 'Vendredi' | 'Samedi';
 
 export interface ISeance extends Document {
+  date?: string;      // Format "YYYY-MM-DD" e.g. "2026-11-30"
   jour: JourSemaine;
   heureDebut: string; // Format "HH:mm" e.g. "08:30"
   heureFin: string;   // Format "HH:mm" e.g. "10:30"
@@ -17,6 +18,7 @@ export interface ISeance extends Document {
 
 const SeanceSchema = new Schema<ISeance>(
   {
+    date: { type: String },
     jour: {
       type: String,
       enum: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
