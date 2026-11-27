@@ -21,6 +21,7 @@ export default async function StudentSchedulePage() {
 
   const seances: SeanceViewItem[] = seancesRaw.map((s) => ({
     _id: s._id.toString(),
+    date: s.date || undefined,
     jour: s.jour,
     heureDebut: s.heureDebut,
     heureFin: s.heureFin,
